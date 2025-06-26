@@ -1,0 +1,40 @@
+
+{
+  "manifest_version": 3,
+  "name": "textPerfect - Rich Text Notes",
+  "version": "1.0.0",
+  "description": "Rich text editor overlay for web pages with markdown support",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://takeuforward.org/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://takeuforward.org/*"],
+      "js": ["markdown-parser.js", "backend_script.js", "contentScript.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "textPerfect Rich Text Editor"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["styles.css", "test.html", "debug.html"],
+      "matches": ["https://takeuforward.org/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

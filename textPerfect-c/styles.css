@@ -1,0 +1,414 @@
+/* Enhanced Styles for textPerfect Extension Overlay */
+#notes-extension-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important; /* Maximum z-index */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0, 0, 0, 0.95) !important;
+  backdrop-filter: blur(4px) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  color: #e0e0e0 !important;
+  pointer-events: all !important;
+}
+
+.dialog-box {
+  width: 90% !important;
+  max-width: 800px !important;
+  height: 90vh !important;
+  max-height: 700px !important;
+  background: #1a1a1a !important;
+  border-radius: 12px !important;
+  border: 1px solid #333 !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  animation: slideInUp 0.3s ease-out !important;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.dialog-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 20px 24px !important;
+  background: #2a2a2a !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+.dialog-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: #EA763F !important;
+}
+
+.dialog-title svg {
+  color: #EA763F !important;
+}
+
+.dialog-controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.control-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  color: #aaa !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+}
+
+.control-btn.delete-btn:hover {
+  background: rgba(220, 53, 69, 0.2) !important;
+  color: #dc3545 !important;
+}
+
+.control-btn.close-btn:hover {
+  background: rgba(220, 53, 69, 0.2) !important;
+  color: #dc3545 !important;
+}
+
+/* Content */
+.dialog-content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 12px 20px !important;
+  background: #2a2a2a !important;
+  border-bottom: 1px solid #333 !important;
+  flex-wrap: wrap !important;
+}
+
+.toolbar-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+.toolbar-separator {
+  width: 1px !important;
+  height: 20px !important;
+  background: #444 !important;
+  margin: 0 8px !important;
+}
+
+.toolbar-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  background: transparent !important;
+  color: #aaa !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.toolbar-btn:hover {
+  background: rgba(234, 118, 63, 0.2) !important;
+  color: #EA763F !important;
+}
+
+.toolbar-btn:active {
+  background: rgba(234, 118, 63, 0.3) !important;
+}
+
+.toolbar-btn svg {
+  pointer-events: none !important;
+}
+
+/* Editor Container */
+.text-editor-container {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: #1a1a1a !important;
+}
+
+#text-editor {
+  flex: 1 !important;
+  padding: 24px !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #e0e0e0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  overflow-y: auto !important;
+  resize: none !important;
+}
+
+#text-editor:empty:before {
+  content: attr(data-placeholder) !important;
+  color: #666 !important;
+  font-style: italic !important;
+  pointer-events: none !important;
+}
+
+/* Rich text formatting */
+#text-editor h1,
+#text-editor h2,
+#text-editor h3,
+#text-editor h4,
+#text-editor h5,
+#text-editor h6 {
+  color: #EA763F !important;
+  font-weight: 600 !important;
+  margin: 16px 0 8px 0 !important;
+}
+
+#text-editor h1 { font-size: 2em !important; }
+#text-editor h2 { font-size: 1.5em !important; }
+#text-editor h3 { font-size: 1.25em !important; }
+#text-editor h4 { font-size: 1.2em !important; }
+#text-editor h5 { font-size: 1.1em !important; }
+#text-editor h6 { font-size: 1em !important; }
+
+#text-editor strong {
+  font-weight: bold !important;
+  color: #fff !important;
+}
+
+#text-editor em {
+  font-style: italic !important;
+  color: #f8f9fa !important;
+}
+
+#text-editor u {
+  text-decoration: underline !important;
+  text-decoration-color: #EA763F !important;
+}
+
+#text-editor code {
+  background: #2a2a2a !important;
+  color: #ff6b6b !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  font-family: 'SF Mono', Monaco, monospace !important;
+  font-size: 0.9em !important;
+}
+
+#text-editor pre {
+  background: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  padding: 16px !important;
+  border-radius: 8px !important;
+  border: 1px solid #444 !important;
+  font-family: 'SF Mono', Monaco, monospace !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  overflow-x: auto !important;
+  margin: 16px 0 !important;
+}
+
+#text-editor blockquote {
+  border-left: 4px solid #EA763F !important;
+  padding: 12px 16px !important;
+  margin: 16px 0 !important;
+  background: rgba(234, 118, 63, 0.1) !important;
+  border-radius: 0 6px 6px 0 !important;
+}
+
+#text-editor ul,
+#text-editor ol {
+  margin: 12px 0 !important;
+  padding-left: 24px !important;
+}
+
+#text-editor li {
+  margin: 6px 0 !important;
+}
+
+#text-editor a {
+  color: #4dabf7 !important;
+  text-decoration: underline !important;
+}
+
+/* Code block styling */
+.code-block-container {
+  margin: 16px 0 !important;
+  background: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.code-block-container > div:first-child {
+  background: #333 !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+  color: #aaa !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.code-block-container pre {
+  margin: 0 !important;
+  background: #1e1e1e !important;
+  border: none !important;
+}
+
+.code-block-container code {
+  display: block !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #e0e0e0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-family: 'SF Mono', Monaco, monospace !important;
+}
+
+/* Statistics */
+.editor-stats {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 12px 24px !important;
+  background: #2a2a2a !important;
+  border-top: 1px solid #333 !important;
+  font-size: 13px !important;
+  color: #888 !important;
+}
+
+/* Footer */
+.dialog-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  padding: 20px 24px !important;
+  background: #2a2a2a !important;
+  border-top: 1px solid #333 !important;
+}
+
+.footer-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-cancel {
+  background: #495057 !important;
+  color: white !important;
+  border: 1px solid #6c757d !important;
+}
+
+.btn-cancel:hover {
+  background: #5a6268 !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #EA763F, #D45E28) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(234, 118, 63, 0.3) !important;
+}
+
+.btn-save:hover {
+  background: linear-gradient(135deg, #D45E28, #C04E1F) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(234, 118, 63, 0.4) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dialog-box {
+    width: 95% !important;
+    height: 95vh !important;
+  }
+  
+  .dialog-header {
+    padding: 16px 20px !important;
+  }
+  
+  .toolbar {
+    padding: 8px 16px !important;
+  }
+  
+  #text-editor {
+    padding: 16px !important;
+    font-size: 14px !important;
+  }
+  
+  .dialog-footer {
+    padding: 16px 20px !important;
+  }
+}
+
+/* Scrollbar styling */
+#text-editor::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+#text-editor::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+#text-editor::-webkit-scrollbar-thumb {
+  background: #444 !important;
+  border-radius: 4px !important;
+}
+
+#text-editor::-webkit-scrollbar-thumb:hover {
+  background: #555 !important;
+}
