@@ -780,15 +780,7 @@ insertCodeBlock() {
   // Create code block container
   const codeBlockContainer = document.createElement('div');
   codeBlockContainer.className = 'code-block-container';
-  codeBlockContainer.style.cssText = `
-    margin: 16px 0;
-    background: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-  `;
+  codeBlockContainer.classList.add('code-block-container');;
 
   // Create header
   const header = document.createElement('div');
@@ -1009,17 +1001,18 @@ executeEditorCommand(command, value = null) {
     console.error(`textPerfect: Error executing command ${command}:`, error);
   }
 }
-  loadContentFromTextarea() {
-    const editor = document.getElementById('text-editor');
-    if (this.targetTextarea && this.targetTextarea.value) {
-      // Convert markdown to HTML for editing
-      const htmlContent = this.markdownParser.markdownToHtml(this.targetTextarea.value);
-      editor.innerHTML = htmlContent;
-    } else {
-      editor.innerHTML = '';
-    }
-    this.updateStats();
+loadContentFromTextarea() {
+  const editor = document.getElementById('text-editor');
+  if (this.targetTextarea && this.targetTextarea.value) {
+    // Convert markdown to HTML for editing
+    const htmlContent = this.markdownParser.markdownToHtml(this.targetTextarea.value);
+    const textContent = textPerfectBackend.sanitizeHtmlContent(htmlContent);
+    editor.innerHTML = textContent;
+  } else {
+    editor.innerHTML = '';
   }
+  this.updateStats();
+}
 
   saveContentToTextarea() {
     const editor = document.getElementById('text-editor');
