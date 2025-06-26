@@ -90,6 +90,41 @@ class TextPerfectBackend {
     return sanitized;
   }
   
+  sanitizeHtmlContent(html) {
+    
+    // Check if DOMPurify is available
+    if (typeof DOMPurify === 'undefined') {
+      
+      console.warn('DOMPurify not found, falling back to basic sanitization');
+      return this.fallbackSanitize(html);
+    }
+    
+    // DOMPurify configuration matching your original allowed tags/attributes
+    console.log("here");
+    const config = {
+      ALLOWED_TAGS: [
+        'p', 'br', 'strong', 'em', 'u', 'code', 'pre', 
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 
+        'ul', 'ol', 'li', 'a', 'div'
+      ],
+      ALLOWED_ATTR: ['href', 'target', 'class'],
+      ALLOW_DATA_ATTR: false,
+      FORBID_SCRIPT: true,
+      FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input','style','iframe','a'],
+      FORBID_CONTENTS: ['onload', 'onerror'],
+      KEEP_CONTENT: true,
+      SANITIZE_DOM: true
+    };
+    
+    try {
+      console.log('DOMPurify sanitization successful');
+      return DOMPurify.sanitize(html, config);
+      
+    } catch (error) {
+      console.error('DOMPurify sanitization failed:', error);
+      return this.fallbackSanitize(html);
+    }
+  }
   static getTextStats(text) {
     const words = text.trim() ? text.trim().split(/\s+/).filter(word => word.length > 0).length : 0;
     const characters = text.length;

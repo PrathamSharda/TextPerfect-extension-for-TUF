@@ -654,14 +654,7 @@ class NotesExtensionContent {
 
   //   // Create code block container
   //   const codeBlockContainer = document.createElement('div');
-  //   codeBlockContainer.className = 'code-block-container';
-  //   codeBlockContainer.style.cssText = `
-  //     margin: 16px 0;
-  //     background: #2a2a2a;
-  //     border: 1px solid #444;
-  //     border-radius: 8px;
-  //     overflow: hidden;
-  //   `;
+  //   
 
   //   // Create header
   //   const header = document.createElement('div');
@@ -780,15 +773,7 @@ insertCodeBlock() {
   // Create code block container
   const codeBlockContainer = document.createElement('div');
   codeBlockContainer.className = 'code-block-container';
-  codeBlockContainer.style.cssText = `
-    margin: 16px 0;
-    background: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-  `;
+  codeBlockContainer.classList.add('code-block-container');;
 
   // Create header
   const header = document.createElement('div');
@@ -1014,7 +999,8 @@ executeEditorCommand(command, value = null) {
     if (this.targetTextarea && this.targetTextarea.value) {
       // Convert markdown to HTML for editing
       const htmlContent = this.markdownParser.markdownToHtml(this.targetTextarea.value);
-      editor.innerHTML = htmlContent;
+      const textContent = textPerfectBackend.sanitizeHtmlContent(htmlContent);
+      editor.innerHTML = textContent;
     } else {
       editor.innerHTML = '';
     }

@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["https://takeuforward.org/*"],
-      "js": ["markdown-parser.js", "backend_script.js", "contentScript.js"],
+      "js": ["markdown-parser.js", "backend_script.js", "contentScript.js","purify.min.js"],
       "css": ["styles.css"],
       "run_at": "document_idle"
     }
@@ -30,11 +30,11 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["styles.css", "test.html", "debug.html"],
+      "resources": ["styles.css", "test.html", "debug.html","purify.min.js"],
       "matches": ["https://takeuforward.org/*"]
     }
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self'"
   }
 }
