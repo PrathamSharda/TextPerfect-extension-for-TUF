@@ -99,24 +99,23 @@ class TextPerfectBackend {
     }
     
     // DOMPurify configuration matching your original allowed tags/attributes
-    console.log("here");
+   
     const config = {
       ALLOWED_TAGS: [
         'p', 'br', 'strong', 'em', 'u', 'code', 'pre', 
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 
-        'ul', 'ol', 'li', 'a', 'div'
+        'ul', 'ol', 'li', 'a','div'
       ],
       ALLOWED_ATTR: ['href', 'target', 'class'],
       ALLOW_DATA_ATTR: false,
       FORBID_SCRIPT: true,
-      FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input','style','iframe','a'],
+      FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input','style','iframe'],
       FORBID_CONTENTS: ['onload', 'onerror'],
       KEEP_CONTENT: true,
       SANITIZE_DOM: true
     };
     
     try {
-      console.log('DOMPurify sanitization successful');
       return DOMPurify.sanitize(html, config);
       
     } catch (error) {
