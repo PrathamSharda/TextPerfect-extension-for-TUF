@@ -833,7 +833,7 @@ insertCodeBlock() {
     e.stopPropagation();
     
     let paste = e.clipboardData.getData('text/plain');
-    console.log('Pasted content:', paste);
+    //console.log('Pasted content:', paste);
     
     // Insert plain text without HTML formatting
     const selection = window.getSelection();
