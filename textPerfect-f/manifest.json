@@ -6,8 +6,7 @@
   "permissions": [
     "activeTab",
     "tabs",
-    "https://takeuforward.org/*",
-    "storage"
+    "https://takeuforward.org/*"
   ],
   "background": {
     "scripts": ["background.js"],

@@ -1,14 +1,13 @@
 
 {
   "manifest_version": 3,
-  "name": "textPerfect - Rich Text Notes",
+  "name": "Notes Enhancer for TUF - textPerfect",
   "version": "1.1.2",
-  "description": "Rich text editor overlay for web pages with markdown support",
+  "description": "Rich text editor for all your note section in takeuforward.org",
   "permissions": [
     "activeTab",
     "tabs",
-    "scripting",
-    "storage"
+    "scripting"
   ],
   "host_permissions": [
     "https://takeuforward.org/*"
@@ -30,7 +29,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["styles.css", "test.html", "debug.html","purify.min.js"],
+      "resources": ["styles.css","popup.css", "test.html", "debug.html","purify.min.js"],
       "matches": ["https://takeuforward.org/*"]
     }
   ],
