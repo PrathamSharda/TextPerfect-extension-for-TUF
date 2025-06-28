@@ -83,7 +83,7 @@ class TextPerfectPopup {
       pageStatusElement.textContent = 'TakeUForward (Supported)';
       pageStatusElement.style.color = '#28a745';
     } else if (url) {
-      pageStatusElement.textContent = 'Compatible';
+      pageStatusElement.textContent = 'Not Compatible';
       pageStatusElement.style.color = '#ffc107';
     } else {
       pageStatusElement.textContent = 'Unknown Page';
