@@ -22,9 +22,7 @@ class MarkdownParser {
   // Convert HTML to Markdown
   htmlToMarkdown(html) {
     if (!html || html.trim() === '') return '';
-    
-  //  console.log('MarkdownParser: Converting HTML to Markdown');
-    
+
     // Create a temporary div to work with
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
@@ -55,11 +53,9 @@ class MarkdownParser {
             
             // Use innerText to preserve line breaks and formatting
             const codeContent = codeClone.innerText || codeClone.textContent || '';
-            //console.log('MarkdownParser: Found code block with content:', codeContent);
-            
+
             return `\`\`\`\n${codeContent}\n\`\`\``+`\u200B`;
           }
-          //console.log('MarkdownParser: Code block div found but no code element');
           return '';
         }
         
@@ -136,7 +132,6 @@ class MarkdownParser {
     
     // Clean up excessive newlines and trim
     const result = markdown.replace(/\n{3,}/g, '\n\n').trim();
-   // console.log('MarkdownParser: HTML to Markdown conversion complete');
     return result;
   }
   
@@ -167,8 +162,6 @@ class MarkdownParser {
   // Convert Markdown to HTML
   markdownToHtml(markdown) {
     if (!markdown || markdown.trim() === '') return '';
-    
-   // console.log('MarkdownParser: Converting Markdown to HTML');
     
     let html = markdown;
     
@@ -221,8 +214,6 @@ class MarkdownParser {
     // Clean up empty paragraphs
     html = html.replace(/<p><\/p>/g, '');
     html = html.replace(/<p><br><\/p>/g, '');
-    
-    //console.log('MarkdownParser: Markdown to HTML conversion complete');
     return html;
   }
   

@@ -3,26 +3,12 @@ class TextPerfectBackground {
   constructor() {
     this.init();
   }
-  
-  init() {
-    console.log('textPerfect Background: Initializing...');
-    
-    // Listen for extension installation
-    chrome.runtime.onInstalled.addListener((details) => {
-      console.log('textPerfect Background: Extension installed/updated', details.reason);
-    });
-    
+
+  init() {    
     // Listen for messages from content scripts and popup
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       this.handleMessage(request, sender, sendResponse);
       return true; // Keep message channel open for async responses
-    });
-    
-    // Listen for tab updates
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      if (changeInfo.status === 'complete') {
-       // console.log('textPerfect Background: Page loaded');
-      }
     });
   }
   
@@ -31,12 +17,10 @@ class TextPerfectBackground {
       // Try to ping the content script
       const response = await chrome.tabs.sendMessage(tabId, { action: 'getStatus' });
       if (response && response.initialized) {
-        //console.log('textPerfect Background: Content script already active');
         return;
       }
     } catch (error) {
       // Content script not loaded or not responding, inject it
-      console.log('textPerfect Background: Injecting content script');
       
       try {
         // Inject scripts in correct order
@@ -55,8 +39,6 @@ class TextPerfectBackground {
           target: { tabId: tabId },
           files: ['styles.css']
         });
-        
-        //console.log('textPerfect Background: Content script injected successfully');
       } catch (injectError) {
         console.error('textPerfect Background: Error injecting content script:', injectError);
       }
@@ -65,7 +47,6 @@ class TextPerfectBackground {
   
   async handleMessage(request, sender, sendResponse) {
     try {
-     // console.log('textPerfect Background: Received message:', request.action);
       
       switch (request.action) {
         case 'getStatus':
@@ -107,4 +88,3 @@ class TextPerfectBackground {
 // Initialize background script
 const textPerfectBackground = new TextPerfectBackground();
 
-//console.log('textPerfect Background: Script loaded and initialized');

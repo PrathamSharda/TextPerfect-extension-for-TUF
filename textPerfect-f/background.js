@@ -1,138 +1,13 @@
-// // Background Script for textPerfect Extension
-// class TextPerfectBackground {
-//   constructor() {
-//     this.init();
-//   }
-  
-//   init() {
-//     console.log('textPerfect Background: Initializing...');
-    
-//     // Listen for extension installation
-//     chrome.runtime.onInstalled.addListener((details) => {
-//       console.log('textPerfect Background: Extension installed/updated', details.reason);
-//     });
-    
-//     // Listen for messages from content scripts and popup
-//     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//       this.handleMessage(request, sender, sendResponse);
-//       return true; // Keep message channel open for async responses
-//     });
-    
-//     // Listen for tab updates
-//     chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-//       if (changeInfo.status === 'complete') {
-//        // console.log('textPerfect Background: Page loaded');
-//       }
-//     });
-//   }
-  
-//   async ensureContentScriptInjected(tabId) {
-//     try {
-//       // Try to ping the content script
-//       const response = await chrome.tabs.sendMessage(tabId, { action: 'getStatus' });
-//       if (response && response.initialized) {
-//         //console.log('textPerfect Background: Content script already active');
-//         return;
-//       }
-//     } catch (error) {
-//       // Content script not loaded or not responding, inject it
-//       console.log('textPerfect Background: Injecting content script');
-      
-//       try {
-//         // Inject scripts in correct order
-//         await chrome.scripting.executeScript({
-//           target: { tabId: tabId },
-//           files: ['markdown-parser.js']
-//         });
-        
-//         await chrome.scripting.executeScript({
-//           target: { tabId: tabId },
-//           files: ['contentScript.js']
-//         });
-        
-//         // Inject CSS
-//         await chrome.scripting.insertCSS({
-//           target: { tabId: tabId },
-//           files: ['styles.css']
-//         });
-        
-//         //console.log('textPerfect Background: Content script injected successfully');
-//       } catch (injectError) {
-//         console.error('textPerfect Background: Error injecting content script:', injectError);
-//       }
-//     }
-//   }
-  
-//   async handleMessage(request, sender, sendResponse) {
-//     try {
-//      // console.log('textPerfect Background: Received message:', request.action);
-      
-//       switch (request.action) {
-//         case 'getStatus':
-//           sendResponse({ 
-//             success: true, 
-//             status: 'Background script active',
-//             version: chrome.runtime.getManifest().version
-//           });
-//           break;
-          
-//         case 'showOverlay':
-//           const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-//           if (tab) {
-//             await this.ensureContentScriptInjected(tab.id);
-//             await chrome.tabs.sendMessage(tab.id, { action: 'showOverlay' });
-//             sendResponse({ success: true });
-//           }
-//           break;
-          
-//         case 'hideOverlay':
-//           const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
-//           if (currentTab) {
-//             await chrome.tabs.sendMessage(currentTab.id, { action: 'hideOverlay' });
-//             sendResponse({ success: true });
-//           }
-//           break;
-          
-//         default:
-//           console.warn('textPerfect Background: Unknown action:', request.action);
-//           sendResponse({ error: 'Unknown action' });
-//       }
-//     } catch (error) {
-//       console.error('textPerfect Background: Error handling message:', error);
-//       sendResponse({ error: error.message });
-//     }
-//   }
-// }
-
-// // Initialize background script
-// const textPerfectBackground = new TextPerfectBackground();
-
-// //console.log('textPerfect Background: Script loaded and initialized');
-
-// Firefox Background Script for textPerfect Extension
 class TextPerfectBackground {
   constructor() {
       this.init();
   }
 
   init() {
-      console.log('textPerfect Background: Initializing for Firefox...');
-      
-      // Listen for extension installation
-      browser.runtime.onInstalled.addListener((details) => {
-          console.log('textPerfect Background: Extension installed/updated', details.reason);
-      });
 
       // Listen for messages from content scripts and popup
       browser.runtime.onMessage.addListener((request, sender) => {
           return this.handleMessage(request, sender);
-      });
-
-      // Listen for tab updates
-      browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-          if (changeInfo.status === 'complete') {
-              // console.log('textPerfect Background: Page loaded');
-          }
       });
   }
 
@@ -141,13 +16,10 @@ class TextPerfectBackground {
           // Try to ping the content script
           const response = await browser.tabs.sendMessage(tabId, { action: 'getStatus' });
           if (response && response.initialized) {
-              //console.log('textPerfect Background: Content script already active');
               return;
           }
       } catch (error) {
-          // Content script not loaded or not responding, inject it
-          console.log('textPerfect Background: Injecting content script');
-          
+          // Content script not loaded or not responding, inject it          
           try {
               // Firefox uses tabs.executeScript (Manifest V2 style)
               await browser.tabs.executeScript(tabId, {
@@ -166,8 +38,6 @@ class TextPerfectBackground {
               await browser.tabs.insertCSS(tabId, {
                   file: 'styles.css'
               });
-              
-              console.log('textPerfect Background: Content script injected successfully');
           } catch (injectError) {
               console.error('textPerfect Background: Error injecting content script:', injectError);
           }
@@ -176,8 +46,6 @@ class TextPerfectBackground {
 
   async handleMessage(request, sender) {
       try {
-          // console.log('textPerfect Background: Received message:', request.action);
-          
           switch (request.action) {
               case 'getStatus':
                   return Promise.resolve({
@@ -292,7 +160,6 @@ class TextPerfectBackground {
           if (url.hostname === 'takeuforward.org') {
               return true;
           }
-          
           return false;
       } catch (error) {
           console.error('Permission check error:', error);
@@ -303,4 +170,3 @@ class TextPerfectBackground {
 
 // Initialize background script for Firefox
 const textPerfectBackground = new TextPerfectBackground();
-console.log('textPerfect Background: Firefox script loaded and initialized');
