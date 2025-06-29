@@ -5,11 +5,9 @@ class TextPerfectPopup {
   }
 
   async init() {
-   // console.log('textPerfect Popup: Initializing...');
     try {
       await this.updateStatus();
-      this.setupEventListeners();
-      //console.log('textPerfect Popup: Ready');
+
     } catch (error) {
       console.error('textPerfect Popup: Init failed:', error);
       // Update UI to show error state
@@ -19,15 +17,12 @@ class TextPerfectPopup {
 
   async updateStatus() {
     try {
-     // console.log('textPerfect Popup: Checking background status...');
-      
+
       // Add timeout to prevent infinite waiting
       const backgroundStatus = await Promise.race([
         chrome.runtime.sendMessage({ action: 'getStatus' }),
         new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
       ]);
-      
-      //console.log('Background status:', backgroundStatus);
       
       if (backgroundStatus && backgroundStatus.success) {
         this.updateExtensionStatus('Active', true);
@@ -58,7 +53,6 @@ class TextPerfectPopup {
   }
 
   updateExtensionStatus(status, isActive) {
-    //console.log('Updating extension status:', status, isActive);
     const statusElement = document.getElementById('extension-status');
     const indicatorElement = document.getElementById('status-indicator');
     
@@ -71,7 +65,6 @@ class TextPerfectPopup {
   }
 
   updatePageStatus(url) {
-   // console.log('Updating page status for:', url);
     const pageStatusElement = document.getElementById('page-status');
     
     if (!pageStatusElement) {
@@ -92,7 +85,6 @@ class TextPerfectPopup {
   }
 
   async checkForNotes(tabId) {
-   // console.log('Checking for notes on tab:', tabId);
     const notesStatusElement = document.getElementById('notes-status');
     
     if (!notesStatusElement) {
@@ -101,11 +93,6 @@ class TextPerfectPopup {
     }
 
    
-  }
-
-  setupEventListeners() {
-  //  console.log('Setting up event listeners...');
-    // Add your event listeners here
   }
 }
 

@@ -7,10 +7,7 @@ class TextPerfectBackend {
   
   init() {
     if (this.initialized) return;
-    
-   // console.log('textPerfect Backend: Initializing...');
     this.initialized = true;
-   // console.log('textPerfect Backend: Initialized successfully');
   }
   
   // Utility functions that can be used by other scripts
@@ -107,17 +104,16 @@ class TextPerfectBackend {
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 
         'ul', 'ol', 'li','div'
       ],
-      ALLOWED_ATTR: ['href', 'target', 'class'],
+      ALLOWED_ATTR: [ 'target', 'class'],
       ALLOW_DATA_ATTR: false,
       FORBID_SCRIPT: true,
-      FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input','style','iframe','a'],
+      FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input','style','iframe','a','href'],
       FORBID_CONTENTS: ['onload', 'onerror'],
       KEEP_CONTENT: true,
       SANITIZE_DOM: true
     };
     
     try {
-     // console.log('DOMPurify sanitization successful');
       return DOMPurify.sanitize(html, config);
       
     } catch (error) {
@@ -145,4 +141,4 @@ const textPerfectBackend = new TextPerfectBackend();
 
 // Export for use in other scripts
 window.TextPerfectBackend = TextPerfectBackend;
-//console.log('textPerfect Backend: Script loaded successfully');
+

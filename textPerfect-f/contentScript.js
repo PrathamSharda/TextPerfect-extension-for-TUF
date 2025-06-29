@@ -13,9 +13,7 @@ class NotesExtensionContent {
     this.init();
   }
 
-  init() {
-   // console.log('textPerfect: Content script starting...');
-    
+  init() {  
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         this.setupAfterDOMReady();
@@ -26,16 +24,11 @@ class NotesExtensionContent {
   }
 
   setupAfterDOMReady() {
-   // console.log('textPerfect: Setting up after DOM ready');
+
     this.setupDocumentObserver();
     this.findNotesTextarea();
     this.setupMessageListener();
-    this.isInitialized = true;
-    
-    // Add a test button for debugging
-    this.addTestButton();
-    
-    //console.log('textPerfect: Content script ready');
+    this.isInitialized = true;   
   }
 
   setupMessageListener() {
@@ -56,30 +49,16 @@ class NotesExtensionContent {
     });
   }
 
-  addTestButton() {
-    const testBtn = document.createElement('button');
-    testBtn.id = 'textperfect-test-btn';
-    testBtn.style.cssText = `
-     
-    `;
-    
-    
-    document.body.appendChild(testBtn);
-    //console.log('textPerfect: Test button added');
-  }
-
   // Find textarea specifically named "note"
   findNotesTextarea() {
     const noteTextarea = document.querySelector('textarea[name="note"]');
     
     if (noteTextarea && this.targetTextarea !== noteTextarea) {
       this.targetTextarea = noteTextarea;
-     // console.log('textPerfect: Found textarea[name="note"]');
       
       // Add focus listener to show overlay
       this.setupTextareaListener(noteTextarea);
-    }
-    
+    }   
     return noteTextarea;
   }
 
@@ -93,7 +72,6 @@ class NotesExtensionContent {
     // Create new handler
     const focusHandler = (e) => {
       if (!this.isOverlayActive) {
-       // console.log('textPerfect: Textarea focused, showing overlay...');
         this.showOverlay();
       }
     };
@@ -105,13 +83,10 @@ class NotesExtensionContent {
     // Also add click handler for better detection
     const clickHandler = (e) => {
       if (!this.isOverlayActive) {
-       // console.log('textPerfect: Textarea clicked, showing overlay...');
         setTimeout(() => this.showOverlay(), 100);
       }
     };
     textarea.addEventListener('click', clickHandler);
-    
-   // console.log('textPerfect: Event listeners added to textarea');
   }
 
   setupDocumentObserver() {
@@ -148,8 +123,6 @@ class NotesExtensionContent {
     const blockClick = (e) => {
       const overlay = document.getElementById('notes-extension-overlay');
       if (overlay && !overlay.contains(e.target)) {
-        
-        
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
@@ -186,8 +159,6 @@ class NotesExtensionContent {
       document.addEventListener(eventType, handler, true);
       this.eventListeners.push({ type: eventType, handler, capture: true });
     });
-
-   // console.log('textPerfect: Page interactions blocked');
   }
 
   // Unblock page interactions
@@ -196,12 +167,10 @@ class NotesExtensionContent {
       document.removeEventListener(type, handler, capture);
     });
     this.eventListeners = [];
-    //console.log('textPerfect: Page interactions unblocked');
   }
 
   async showOverlay() {
     if (this.overlayInjected) {
-     // console.log('textPerfect: Overlay already shown');
       const existingOverlay = document.getElementById('notes-extension-overlay');
       if (existingOverlay) {
         existingOverlay.style.display = 'flex';
@@ -212,8 +181,6 @@ class NotesExtensionContent {
     }
 
     try {
-     // console.log('textPerfect: Injecting overlay...');
-      
       // Store original content from textarea
       this.originalContent = this.targetTextarea ? this.targetTextarea.value : '';
       
@@ -238,10 +205,10 @@ class NotesExtensionContent {
       this.loadContentFromTextarea();
       
       this.overlayInjected = true;
-      //console.log('textPerfect: Overlay injected successfully');
+
       
     } catch (error) {
-      //console.error('textPerfect: Error creating overlay:', error);
+      console.error("error:",error);
     }
   }
 
@@ -254,8 +221,6 @@ class NotesExtensionContent {
       
       // Unblock page interactions
       this.unblockPageInteractions();
-      
-      //console.log('textPerfect: Overlay hidden');
     }
   }
 
@@ -443,113 +408,6 @@ class NotesExtensionContent {
     this.updateStats();
   }
 
-  // setupToolbarHandlers() {
-  //   // Bold
-  //   document.getElementById('bold-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('bold', false, null);
-  //   });
-
-  //   // Italic
-  //   document.getElementById('italic-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('italic', false, null);
-  //   });
-
-  //   // Underline
-  //   document.getElementById('underline-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('underline', false, null);
-  //   });
-
-  //   // Headers
-  //   document.getElementById('h1-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('formatBlock', false, '<h1>');
-  //   });
-
-  //   document.getElementById('h2-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('formatBlock', false, '<h2>');
-  //   });
-
-  //   document.getElementById('h3-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('formatBlock', false, '<h3>');
-  //   });
-
-  //   // Code block
-  //   document.getElementById('code-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     this.insertCodeBlock();
-  //   });
-
-  //   // Lists
-  //   document.getElementById('bullet-list-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('insertUnorderedList', false, null);
-  //   });
-
-  //   document.getElementById('numbered-list-btn').addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     document.execCommand('insertOrderedList', false, null);
-  //   });
-  // }
-
-  // setupEditorHandlers() {
-  //   const editor = document.getElementById('text-editor');
-
-  //   // Handle Enter key in code blocks to prevent creating new code blocks
-  //   editor.addEventListener('keydown', (e) => {
-  //     if (e.key === 'Enter') {
-  //       const selection = window.getSelection();
-  //       const range = selection.getRangeAt(0);
-  //       const container = range.commonAncestorContainer;
-        
-  //       // Check if we're inside a code block
-  //       const codeBlock = this.findParentCodeBlock(container);
-  //       if (codeBlock) {
-  //         e.preventDefault();
-          
-  //         // Insert a line break instead of creating a new block
-  //         const br = document.createElement('br');
-  //         range.deleteContents();
-  //         range.insertNode(br);
-          
-  //         // Move cursor after the br
-  //         range.setStartAfter(br);
-  //         range.setEndAfter(br);
-  //         selection.removeAllRanges();
-  //         selection.addRange(range);
-          
-  //         return false;
-  //       }
-  //     }
-  //   });
-
-  //   // Prevent default behavior that might interfere with our code blocks
-  //   editor.addEventListener('paste', (e) => {
-  //     e.preventDefault();
-  //     const text = e.clipboardData.getData('text/plain');
-  //     document.execCommand('insertText', false, text);
-  //   });
-  // }
-
-  // findParentCodeBlock(node) {
-  //   let current = node;
-  //   while (current && current !== document.getElementById('text-editor')) {
-  //     if (current.nodeType === Node.ELEMENT_NODE) {
-  //       if (current.tagName === 'CODE' || 
-  //           current.tagName === 'PRE' || 
-  //           current.classList?.contains('code-block-container')) {
-  //         return current;
-  //       }
-  //     }
-  //     current = current.parentNode;
-  //   }
-  //   return null;
-  // }
-
   setupEditorHandlers() {
     const editor = document.getElementById('text-editor');
   
@@ -646,99 +504,8 @@ class NotesExtensionContent {
     }
     return null;
   }
-
-  // insertCodeBlock() {
-  //   const editor = document.getElementById('text-editor');
-  //   const selection = window.getSelection();
-  //   const range = selection.getRangeAt(0);
-
-  //   // Create code block container
-  //   const codeBlockContainer = document.createElement('div');
-  //   codeBlockContainer.className = 'code-block-container';
-  //   codeBlockContainer.style.cssText = `
-  //     margin: 16px 0;
-  //     background: #2a2a2a;
-  //     border: 1px solid #444;
-  //     border-radius: 8px;
-  //     overflow: hidden;
-  //   `;
-
-  //   // Create header
-  //   const header = document.createElement('div');
-  //   header.style.cssText = `
-  //     background: #333;
-  //     padding: 8px 12px;
-  //     font-size: 12px;
-  //     color: #aaa;
-  //     display: flex;
-  //     justify-content: space-between;
-  //     align-items: center;
-  //   `;
-  //   header.textContent = 'Code Block';
-
-  //   // Create pre element
-  //   const pre = document.createElement('pre');
-  //   pre.style.cssText = `
-  //     margin: 0;
-  //     padding: 16px;
-  //     background: #1e1e1e;
-  //     color: #e0e0e0;
-  //     font-family: 'SF Mono', Monaco, monospace;
-  //     font-size: 14px;
-  //     line-height: 1.4;
-  //     overflow-x: auto;
-  //     white-space: pre-wrap;
-  //   `;
-
-  //   // Create code element
-  //   const code = document.createElement('code');
-  //   code.contentEditable = true;
-  //   code.textContent = 'Enter your code here...';
-  //   code.style.cssText = `
-  //     display: block;
-  //     outline: none;
-  //   `;
-
-  //   // Add event listener to handle proper editing
-  //   code.addEventListener('click', () => {
-  //     if (code.textContent === 'Enter your code here...') {
-  //       code.textContent = '';
-  //     }
-  //     code.focus();
-  //   });
-  //   code.addEventListener('paste',async(e)=>{
-  //     e.preventDefault();
-  //     let paste= e.clipboardData.getData('text');
-  //     console.log('Pasted content:', paste);
-  //     let formattingPaste=paste.replaceAll('\n','<br></br>');
-  //     const selection=window.getSelection();
-  //     if (!selection.rangeCount) return;
-  //     selection.deleteFromDocument();
-  //     selection.getRangeAt(0).insertNode(document.createTextNode(formattingPaste));
-  //     selection.collapseToEnd();
-  //   });
-  //   // Assemble the code block
-  //   pre.appendChild(code);
-  //   codeBlockContainer.appendChild(header);
-  //   codeBlockContainer.appendChild(pre);
-
-  //   // Insert into editor
-  //   range.deleteContents();
-  //   range.insertNode(codeBlockContainer);
-
-  //   // Add a paragraph after the code block for continued typing
-  //   const afterPara = document.createElement('p');
-  //   afterPara.innerHTML = '<br>';
-  //   codeBlockContainer.insertAdjacentElement('afterend', afterPara);
-
-  //   // Set cursor in the new paragraph
-  //   const newRange = document.createRange();
-  //   newRange.setStart(afterPara, 0);
-  //   newRange.setEnd(afterPara, 0);
-  //   selection.removeAllRanges();
-  //   selection.addRange(newRange);
-  // }
-// Fixed insertCodeBlock method
+  
+  // insertCodeBlock method
 insertCodeBlock() {
   const editor = document.getElementById('text-editor');
   
@@ -833,7 +600,7 @@ insertCodeBlock() {
     e.stopPropagation();
     
     let paste = e.clipboardData.getData('text/plain');
-    //console.log('Pasted content:', paste);
+  
     
     // Insert plain text without HTML formatting
     const selection = window.getSelection();
@@ -1001,18 +768,18 @@ executeEditorCommand(command, value = null) {
     console.error(`textPerfect: Error executing command ${command}:`, error);
   }
 }
-loadContentFromTextarea() {
-  const editor = document.getElementById('text-editor');
-  if (this.targetTextarea && this.targetTextarea.value) {
-    // Convert markdown to HTML for editing
-    const htmlContent = this.markdownParser.markdownToHtml(this.targetTextarea.value);
-    const textContent = textPerfectBackend.sanitizeHtmlContent(htmlContent);
-    editor.innerHTML = textContent;
-  } else {
-    editor.innerHTML = '';
+  loadContentFromTextarea() {
+    const editor = document.getElementById('text-editor');
+    if (this.targetTextarea && this.targetTextarea.value) {
+      // Convert markdown to HTML for editing
+      const htmlContent = this.markdownParser.markdownToHtml(this.targetTextarea.value);
+      const textContent = textPerfectBackend.sanitizeHtmlContent(htmlContent);
+      editor.innerHTML = textContent;
+    } else {
+      editor.innerHTML = '';
+    }
+    this.updateStats();
   }
-  this.updateStats();
-}
 
   saveContentToTextarea() {
     const editor = document.getElementById('text-editor');
@@ -1025,7 +792,6 @@ loadContentFromTextarea() {
       const event = new Event('change', { bubbles: true });
       this.targetTextarea.dispatchEvent(event);
       
-      //console.log('textPerfect: Content saved to textarea as markdown');
     }
   }
 
@@ -1048,5 +814,3 @@ if (document.readyState === 'loading') {
 } else {
   new NotesExtensionContent();
 }
-
-//console.log('textPerfect: Content script loaded');
