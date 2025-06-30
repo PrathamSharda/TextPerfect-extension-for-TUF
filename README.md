@@ -41,7 +41,7 @@ https://www.youtube.com/watch?v=or0ELMZuwXQ
 ## Installation
 
 ### Option 1: Browser Store (currently not supported ->underwork)
-- **Chrome**: [Install from Chrome Web Store](https://chrome.google.com/webstore/)
+- **Chrome**: [Install from Chrome Web Store](https://chromewebstore.google.com/detail/notes-enhancer-for-tuf-te/jjkgdjamkciachachkfhkmjkmcicbaig?authuser=0&hl=en-GB)
 - **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/)
 ---
 ### Option 2: Manual Installation (Developer Mode)
