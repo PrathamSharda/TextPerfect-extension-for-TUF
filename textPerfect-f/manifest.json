@@ -24,4 +24,4 @@
     "default_title": "textPerfect Rich Text Editor"
   },
   "web_accessible_resources": ["styles.css", "popup.css"],
-  "content_security_policy":  "script-src 'self'; object-src 'self'; style-src 'self"}
+  "content_security_policy":  "script-src 'self'; object-src 'self'; style-src 'self'"}
