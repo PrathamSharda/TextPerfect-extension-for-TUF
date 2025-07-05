@@ -40,9 +40,9 @@ https://www.youtube.com/watch?v=or0ELMZuwXQ
 
 ## Installation
 
-### Option 1: Browser Store (currently not supported ->underwork)
+### Option 1: Browser Store 
 - **Chrome**: [Install from Chrome Web Store](https://chromewebstore.google.com/detail/notes-enhancer-for-tuf-te/jjkgdjamkciachachkfhkmjkmcicbaig?authuser=0&hl=en-GB)
-- **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/)
+- **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/textperfect-enhance-tuf-notes/)
 ---
 ### Option 2: Manual Installation (Developer Mode)
 1. Clone or download the repository:
